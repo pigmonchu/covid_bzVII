@@ -1,0 +1,25 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alta de incidencia por provincia y fecha</title>
+</head>
+<body>
+    <h1>Alta de incidencia diaria Covid</h1>
+    <p>Formulario de alta de incidencias.</p>
+    <p>Aquí podrás insertar la informacion de tu provincia</p>
+
+    <form action="/incidenciasdiarias" method="post">
+        <input type="text" name="provincia" >
+        <input type="date" name="fecha" >
+        <input type="number" name="num_casos" id="">
+        <input type="number" name="num_casos_prueba_pcr" id="">
+        <input type="number" name="num_casos_prueba_test_ac" id="">
+        <input type="number" name="num_casos_prueba_ag" id="">
+        <input type="number" name="num_casos_prueba_elisa" id="">
+        <input type="number" name="num_casos_prueba_desconocida" id="">
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>

@@ -1,3 +1,4 @@
+from flask import render_template, request
 from covid import app
 import csv
 import json
@@ -70,3 +71,12 @@ def casos(year, mes, dia=None):
     1er caso devolver el número total de casos covid en un día del año determinado para todas las provincias
     2º caso. Lo mismo pero detallado por tipo. PCR, AC, AG, ELISA, DESONOCIDO -> JSON
     '''
+
+
+@app.route("/incidenciasdiarias", methods = ['GET', 'POST'])
+def incidencia():
+    if request.method == 'GET':
+        return render_template("alta.html")
+    
+
+    return "Se ha hecho un post"
