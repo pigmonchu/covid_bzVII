@@ -2,6 +2,7 @@ from covid import app
 import csv
 import json
 
+
 @app.route("/provincias")
 def provincias():
     fichero = open("data/provincias.csv", "r", encoding="utf8")
@@ -29,14 +30,43 @@ def laprovincia(codigoProvincia):
     fichero.close()
     return "La provincia no existe. Largo de aquí!!!"
 
-'''
 @app.route("/casos/<int:year>", defaults={'mes': None, 'dia':None})
-@app.route("/casos/<int:year>/<int:mes>", defaults={'dia':None})
-'''
+@app.route("/casos/<int:year>/<int:mes>")
 @app.route("/casos/<int:year>/<int:mes>/<int:dia>")
-def casos(year, mes, dia):
-    pass
+def casos(year, mes, dia=None):
+    # validar fecha
+    
+    if not mes:
+        fecha = "{:04d}".format(year)
+    elif not dia: 
+        fecha = "{:04d}-{:02d}".format(year, mes)
+    else: 
+        fecha = "{:04d}-{:02d}-{:02d}".format(year, mes, dia)
+
+    fichero = open("data/casos_diagnostico_provincia.csv", "r")
+    dictReader = csv.DictReader(fichero)
+
+    res = {
+        'num_casos': 0,
+        'num_casos_prueba_pcr': 0,
+        'num_casos_prueba_test_ac': 0,
+        'num_casos_prueba_ag': 0,
+        'num_casos_prueba_elisa': 0,
+        'num_casos_prueba_desconocida': 0
+    }
+    
+    for registro in dictReader:
+        if fecha in registro['fecha']:
+            for clave in res:
+                res[clave] += int(registro[clave])
+
+        elif registro['fecha'] > fecha:
+            break
+
+    fichero.close()
+    return json.dumps(res)
+
     '''
     1er caso devolver el número total de casos covid en un día del año determinado para todas las provincias
     2º caso. Lo mismo pero detallado por tipo. PCR, AC, AG, ELISA, DESONOCIDO -> JSON
-
+    '''
