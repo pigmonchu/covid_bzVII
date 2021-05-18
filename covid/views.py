@@ -76,7 +76,28 @@ def casos(year, mes, dia=None):
 @app.route("/incidenciasdiarias", methods = ['GET', 'POST'])
 def incidencia():
     if request.method == 'GET':
-        return render_template("alta.html")
+        return render_template("alta.html", casos_pcr=0)
+
+    #Que los valores de los casos sean números y sean enteros positivos
+    #valorar num_casos_prueba_pcr >= 0 y entero
+    try:
+        num_pcr = int(request.form["num_casos_prueba_pcr"])
+        if num_pcr < 0:
+            raise ValueError('Debe ser positivo')
+    
+    except ValueError:
+        return render_template("alta.html", casos_pcr="Introduce un valor correcto")
     
 
+
+    #Validar la información que llega
+    #Que el total de casos sea la suma del resto de casos
+    #Que la provincia sea correcta
+    #Que la fecha sea correcta en formato y supongo que en valor
+    #Que la fecha no sea a futuro y la fecha no sea anterior a fecha covid
+
+    #Si la informacion es incorrecta
+
+
     return "Se ha hecho un post"
+
