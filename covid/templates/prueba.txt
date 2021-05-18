@@ -1,0 +1,9 @@
+Hola me llamo lucas, y soy un fichero de texto plano
+
+Jinja me ignora, solo hace caso a sus etiquetas
+
+{% for provincia in provincias %}
+    {{provincia.codigo}} - {{provincia.descripcion}}
+{% endfor %}
+
+Que estirao es este jinja!
